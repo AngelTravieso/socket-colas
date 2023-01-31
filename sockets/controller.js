@@ -7,6 +7,9 @@ const socketController = (socket) => {
     // Emitir evento - ultimo ticket
     socket.emit('ultimo-ticket', `Ticket ${ticketControl.ultimo}`);
 
+    // Ultimo 4 tickets
+    socket.emit('estado-actual', ticketControl.ultimos4);
+
     // Escuchar evento - siguiente ticket
     socket.on('siguiente-ticket', (payload, callback) => {
 
@@ -33,7 +36,8 @@ const socketController = (socket) => {
 
         const ticket = ticketControl.atenderTicket(escritorio);
 
-        // TODO: Notificar cambio en los ultimos 4 tickets
+        // Los ultimos 4 cambiaron y se notifica otra vez ( a las demas pantallas )
+        socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
 
         // No hay tickets pendientes
         if(!ticket) {
