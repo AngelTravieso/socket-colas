@@ -23,6 +23,12 @@ socket.on('disconnect', () => {
 // Escuchar mensaje ultimos 4 tickets
 socket.on('estado-actual', (payload) => {
 
+    // Audio para reproducir
+    const audio = new Audio('./audio/new-ticket.mp3');
+
+    // Reproducir audio cuando se va a atender el siguiente ticket
+    audio.play();
+
     const [ticket1, ticket2, ticket3, ticket4] = payload;
 
     // Si no hay ticket
